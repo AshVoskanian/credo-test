@@ -1,1 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
+//normalize
+@import "src/styles/normalize";
+
+a {
+  text-decoration: none;
+}
+.container {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+}

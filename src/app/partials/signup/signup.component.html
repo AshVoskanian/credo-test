@@ -1,0 +1,27 @@
+<div class="signup">
+  <div class="header">
+    <h3>SOL</h3>
+    <h4>
+      Already using?
+      <a>Sign in</a>
+    </h4>
+  </div>
+  <div class="content">
+    <div class="desc">
+      <h1>
+        Create an account
+      </h1>
+      <ul class="list">
+        <li class="list-item" *ngFor="let offer of offers">
+          <svg>
+            <use [attr.xlink:href]="iconPath + offer.icon + '.svg#Layer_1'"></use>
+          </svg>
+          {{offer.text}}
+        </li>
+      </ul>
+    </div>
+    <div class="form">
+
+    </div>
+  </div>
+</div>

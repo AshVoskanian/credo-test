@@ -1,0 +1,67 @@
+.signup {
+  .header {
+    height: 100px;
+    padding: 0 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #E3E4E8;
+
+    h3 {
+      font-size: 20px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    h4 {
+      font-size: 14px;
+
+      a {
+        color: #3F40EF;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .content {
+    margin-top: 100px;
+    display: flex;
+    justify-content: space-between;
+
+    .desc {
+      width: 30%;
+      padding: 0 50px;
+
+      h1 {
+        font-size: 4rem;
+        font-weight: bold;
+      }
+
+      .list {
+        .list-item {
+          margin-bottom: 22px;
+          display: flex;
+          align-items: center;
+          color: #4C4B50;
+          font-size: 1.4rem;
+
+          svg {
+            width: 20px;
+            min-width: 20px;
+            height: 20px;
+            margin-right: 12px;
+          }
+
+          &:last-of-type {
+            margin: 0;
+          }
+        }
+      }
+    }
+
+    .form {
+      width: 65%;
+      background: blue;
+    }
+  }
+}

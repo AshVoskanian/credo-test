@@ -1,10 +1,15 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {Routes, RouterModule, PreloadAllModules} from '@angular/router';
 
-const routes: Routes = [];
+const routes: Routes = [
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home',loadChildren:  () => import('./partials/home/home.module').then(m => m.HomeModule)},
+  { path: 'form',loadChildren:  () => import('./partials/signup/signup.module').then(m => m.SignupModule)},
+  { path: 'datepicker',loadChildren:  () => import('./partials/datepicker/datepicker.module').then(m => m.DatepickerModule)}
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

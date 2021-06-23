@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "credo-test"
+  "defaultProject": "credo-test",
+  "cli": {
+    "analytics": false
+  }
 }
