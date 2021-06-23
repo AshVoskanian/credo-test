@@ -1,0 +1,16 @@
+<form class="form" autocomplete="off">
+  <ul class="fields-list">
+    <li class="field" *ngFor="let item of formData">
+      <div class="input" *ngIf="item.type !== 'button' && item.type !== 'checkbox'">
+        <label [for]="item.id">{{item.label}}</label>
+        <input [type]="item.type" [id]="item.id" autocomplete="email" name="sd"/>
+      </div>
+      <div class="button" *ngIf="item.type === 'button'">
+        {{item.buttonText}}
+      </div>
+      <div class="checkbox" *ngIf="item.type === 'checkbox'">
+        {{item.label}}
+      </div>
+    </li>
+  </ul>
+</form>

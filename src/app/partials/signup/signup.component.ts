@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ICONS } from '../../utils';
 import { OffersModel } from '../../models/offers.model';
+import {FormDataModel} from '../../models/form-data.model';
 
 @Component({
   selector: 'app-signup-form',
@@ -31,6 +32,42 @@ export class SignupComponent implements OnInit {
       text: 'Convenience'
     }
   ];
+  public formData: FormDataModel[] = [
+    {
+      label: 'Full Name',
+      type: 'text',
+      name: 'fullName',
+      id: 'fullName'
+    },
+    {
+      label: 'Email',
+      type: 'email',
+      name: 'email',
+      id: 'email',
+      autocomplete: 'off'
+    },
+    {
+      label: 'Phone Number',
+      type: 'text',
+      name: 'phone',
+      id: 'phoneNumber'
+    },
+    {
+      label: 'Password',
+      type: 'password',
+      name: 'password',
+      id: 'password'
+    },
+    {
+      type: 'button',
+      buttonText: 'Submit',
+      buttonType: 'submit'
+    },
+    {
+      type: 'checkbox',
+      label: 'racxa'
+    }
+  ]
 
   constructor() { }
 

@@ -1,0 +1,41 @@
+.form {
+  width: 100%;
+  padding: 20px;
+
+  .fields-list {
+    max-width: 400px;
+    width: 100%;
+
+    .field {
+      margin-bottom: 22px;
+      position: relative;
+
+      .input {
+        label {
+          margin-left: 12px;
+          font-size: 12px;
+          color: #727580;
+          background-color: #fff;
+          position: absolute;
+          left: 0;
+          top: -7px;
+          z-index: 1;
+        }
+
+        input {
+          width: 100%;
+          height: 50px;
+          padding: 12px;
+          border: 1px solid #E5E7EB;
+          border-radius: 12px;
+          position: relative;
+          outline: none;
+        }
+      }
+
+      &:last-of-type {
+        margin: 0;
+      }
+    }
+  }
+}
