@@ -1,15 +1,49 @@
-<form class="form" autocomplete="off">
+<form class="form" (ngSubmit)="submit(f)" #f="ngForm" autocompleted>
   <ul class="fields-list">
-    <li class="field" *ngFor="let item of formData">
-      <div class="input" *ngIf="item.type !== 'button' && item.type !== 'checkbox'">
-        <label [for]="item.id">{{item.label}}</label>
-        <input [type]="item.type" [id]="item.id" autocomplete="email" name="sd"/>
+    <li class="field" *ngFor="let item of formData; let idx = index">
+      <div class="input" *ngIf="item.type !== 'button' && item.type !== 'checkbox'" (click)="onFieldClick($event, idx)">
+        <label [for]="item.id" [class.active]="selectedFieldIndex === idx">{{item.label}}</label>
+        <input [type]="item.type !== 'password' ? item.type : showPassword ? 'text' : 'password'"
+               [class.error]="f.submitted && input.invalid"
+               #input="ngModel"
+               [id]="item.id"
+               [autocomplete]="item.autocomplete || 'off'"
+               [name]="item.name || ''"
+               [maxLength]="item.maxLength || 1000000"
+               [minLength]="item.minLength || 0"
+               [(ngModel)]="item.value"
+               [required]="item.required || true"
+               [pattern]="item.pattern || '.*'"/>
+        <div class="password-info" *ngIf="item.type === 'password'" [class.active]="selectedFieldIndex === idx">
+          <h4 class="title">
+            {{title}}
+          </h4>
+          <div class="pass-strength">
+            <mat-password-strength class="green" (onStrengthChanged)="onStrengthChanged($event)" [password]="item.value"></mat-password-strength>
+          </div>
+          <p class="desc">
+            {{description}}
+          </p>
+        </div>
+        <svg class="show-pass" *ngIf="item.type === 'password'" (click)="showPass()">
+          <use [attr.xlink:href]="iconPath + (!showPassword ? 'show_pass' : 'hide_pass')+ '.svg#Layer_1'"></use>
+        </svg>
+        <svg class="done" *ngIf="input.valid && item.type !== 'password'">
+          <use [attr.xlink:href]="iconPath + 'done.svg#Layer_1'"></use>
+        </svg>
       </div>
-      <div class="button" *ngIf="item.type === 'button'">
+      <button class="button" [type]="item.buttonType" *ngIf="item.type === 'button'">
         {{item.buttonText}}
-      </div>
-      <div class="checkbox" *ngIf="item.type === 'checkbox'">
-        {{item.label}}
+      </button>
+      <div class="checkbox-wrapper" *ngIf="item.type === 'checkbox'" [class.active]="confirmed" (click)="confirmed = !confirmed">
+        <div class="checkbox">
+          <svg>
+            <use [attr.xlink:href]="iconPath + 'done.svg#Layer_1'"></use>
+          </svg>
+        </div>
+        <span class="txt" [class.error]="confirmedError">
+          I agree to our Terms of Service and Privacy Policy
+        </span>
       </div>
     </li>
   </ul>

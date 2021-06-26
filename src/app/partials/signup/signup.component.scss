@@ -25,11 +25,12 @@
 
   .content {
     margin-top: 100px;
+    padding: 0 100px;
     display: flex;
     justify-content: space-between;
 
     .desc {
-      width: 40%;
+      width: 45%;
       padding: 0 50px;
 
       h1 {
@@ -60,7 +61,7 @@
     }
 
     .form {
-      width: 55%;
+      width: 50%;
     }
   }
 }

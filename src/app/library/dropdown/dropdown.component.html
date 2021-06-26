@@ -1,0 +1,11 @@
+<div class="dropdown" dropdown>
+  <input type="text" readonly [(ngModel)]="selectedItem">
+  <svg>
+    <use [attr.xlink:href]="iconPath + 'arrow.svg#Layer_1'"></use>
+  </svg>
+  <ul>
+    <li *ngFor="let item of listData" (click)="onListItemSelect(item)">
+      {{item.name}}
+    </li>
+  </ul>
+</div>

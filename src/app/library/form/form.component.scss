@@ -1,3 +1,8 @@
+$_blue: #4547C8;
+$_darkgrey: #727580;
+$_grey: #E5E7EB;
+$_error: #E93E36;
+
 .form {
   width: 100%;
   padding: 20px;
@@ -13,23 +18,155 @@
       .input {
         label {
           margin-left: 12px;
+          padding: 0 5px;
           font-size: 12px;
-          color: #727580;
+          color: $_darkgrey;
           background-color: #fff;
           position: absolute;
-          left: 0;
+          transition: color .3s;
+          left: 7px;
           top: -7px;
           z-index: 1;
+
+          &.active {
+            color: $_blue;
+          }
         }
 
         input {
           width: 100%;
           height: 50px;
-          padding: 12px;
-          border: 1px solid #E5E7EB;
+          padding: 0 18px;
+          border: 2px solid $_grey;
           border-radius: 12px;
           position: relative;
+          transition: all .3s;
           outline: none;
+
+          &:focus {
+            border-color: $_blue;
+          }
+
+          &.error {
+            border-color: $_error;
+          }
+        }
+
+        svg {
+          width: 20px;
+          height: 20px;
+          position: absolute;
+          right: 15px;
+          top: 50%;
+          transform: translateY(-50%);
+          fill: $_darkgrey;
+
+          &.done {
+            fill: #41BA58;
+          }
+
+          &.show-pass {
+            cursor: pointer;
+          }
+        }
+
+        .password-info {
+          width: 200px;
+          padding: 20px;
+          opacity: 0;
+          box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+          position: absolute;
+          right: -52%;
+          top: -55%;
+          transition: all .3s;
+          border-radius: 6px;
+
+          .title {
+            font-weight: bold;
+          }
+
+          .pass-strength {
+            margin: 8px 0;
+          }
+
+          .desc {
+            font-size: 12px;
+            color: $_darkgrey;
+          }
+
+          &.active {
+            opacity: 1;
+          }
+        }
+      }
+
+      .button {
+        width: 100%;
+        border: none;
+        height: 50px;
+        border-radius: 12px;
+        display: block;
+        background-color: $_blue;
+        color: #fff;
+        line-height: 50px;
+        text-align: center;
+        font-size: 1.5rem;
+        transition: all .3s;
+        cursor: pointer;
+
+        &:hover {
+          background-color: darken($_blue, 5);
+        }
+      }
+
+      .checkbox-wrapper {
+        height: 50px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        .checkbox {
+          height: 20px;
+          width: 20px;
+          margin-right: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid $_grey;
+          border-radius: 4px;
+          transition: .3s;
+
+          svg {
+            width: 13px;
+            height: 13px;
+            fill: #fff;
+            opacity: 0;
+            transition: .3s;
+          }
+        }
+
+        .txt {
+          color: $_darkgrey;
+          transition: .3s;
+
+          &.error {
+            animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+            color: $_error;
+          }
+        }
+
+        &.active {
+          .checkbox {
+            background-color: $_blue;
+
+            svg {
+              opacity: 1;
+            }
+          }
+
+          .txt {
+            color: #000;
+          }
         }
       }
 
@@ -37,5 +174,23 @@
         margin: 0;
       }
     }
+  }
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
   }
 }

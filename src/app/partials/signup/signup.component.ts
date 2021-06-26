@@ -44,23 +44,25 @@ export class SignupComponent implements OnInit {
       type: 'email',
       name: 'email',
       id: 'email',
-      autocomplete: 'off'
+      pattern: '^(([^<>()[\\]\\\\.,;:\\s@"]+(\\.[^<>()[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$'
     },
     {
       label: 'Phone Number',
-      type: 'text',
+      type: 'number',
       name: 'phone',
-      id: 'phoneNumber'
+      id: 'phoneNumber',
+      pattern: '^5[0-9]{8}$',
     },
     {
       label: 'Password',
       type: 'password',
       name: 'password',
+      value:'',
       id: 'password'
     },
     {
       type: 'button',
-      buttonText: 'Submit',
+      buttonText: 'Sign Up',
       buttonType: 'submit'
     },
     {
