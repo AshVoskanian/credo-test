@@ -64,6 +64,7 @@ export class SignupComponent implements OnInit {
       id: 'password'
     },
     {
+      label: 'Date',
       type: 'datepicker',
       name: 'date',
       value: '',
