@@ -65,7 +65,7 @@ export class SignupComponent implements OnInit {
     },
     {
       type: 'datepicker',
-      name: 'datepicker',
+      name: 'date',
       value: '',
       readOnly: true
     },
@@ -87,4 +87,7 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  sendFormData(formData: any) {
+    console.log('sendData', formData)
+  }
 }

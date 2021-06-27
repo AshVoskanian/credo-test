@@ -21,7 +21,7 @@
       </ul>
     </div>
     <div class="form">
-      <app-form [formData]="formData"></app-form>
+      <app-form [formData]="formData" (onFormDataEmmit)="sendFormData($event)"></app-form>
     </div>
   </div>
 </div>

@@ -10,6 +10,7 @@ import { MONTHS} from '../../sahred/date';
 export class CustomDatepickerComponent implements OnInit {
   @Output() public onSelectedDateEmmit: EventEmitter<any> = new EventEmitter<any>();
   @Output() public onCancel: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   public selectedMonthValue: string = '';
   public showPopup: boolean = false;
   public selectedYear: string = '';
@@ -30,7 +31,7 @@ export class CustomDatepickerComponent implements OnInit {
     this.getYears();
     this.onMonthSelect({name: this.months[this.date.getMonth()].name, value: (this.date.getMonth() + 1).toString()});
     this.onDaySelect({value: this.date.getDate().toString(), active:true})
-    setTimeout(() =>{
+    setTimeout(() => {
       this.showPopup = true;
     });
   }
@@ -58,7 +59,6 @@ export class CustomDatepickerComponent implements OnInit {
     const year = prevMonth.getFullYear();
     this.daysInPrevMonth = new window.Date(year, month, 0).getDate().toString();
   }
-
 
   getCurrentDaysInMonth() {
     this.getPrevMonthDays();
@@ -93,13 +93,13 @@ export class CustomDatepickerComponent implements OnInit {
   }
 
   onYearSelect(year: ListDataModel) {
-    this.selectedDay = ' ';
+    this.selectedDay = '';
     this.selectedYear = year.name;
     this.getCurrentDaysInMonth();
   }
 
   onMonthSelect(month: ListDataModel) {
-    this.selectedDay = ' ';
+    this.selectedDay = '';
     this.selectedMonth = month.name;
     this.selectedMonthValue = month.value;
     this.getCurrentDaysInMonth();
@@ -112,11 +112,15 @@ export class CustomDatepickerComponent implements OnInit {
   }
 
   onDateSet() {
+    if (!this.selectedDay) {
+      return;
+    }
+
     // Date format
     const date = new Date(`${this.selectedMonth}/${this.selectedDay}/${this.selectedYear}`);
 
     // String
-    const stringDate = this.selectedDay + '/' + this.selectedMonthValue + '/' + this.selectedYear;
+    const stringDate = String(this.selectedDay).padStart(2, '0') + '/' + String(this.selectedMonthValue).padStart(2, '0') + '/' + this.selectedYear;
 
     this.onSelectedDateEmmit.emit({
       stringFormat: stringDate,

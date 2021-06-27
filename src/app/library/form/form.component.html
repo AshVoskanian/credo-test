@@ -1,4 +1,4 @@
-<form class="form" (ngSubmit)="submit(f)" #f="ngForm">
+<form class="form" (ngSubmit)="submit(f)" #f="ngForm" hot-keys (closeEvent)="showDatepicker = false">
   <ul class="fields-list" [ngStyle]="formStyles || {}">
     <li class="field" *ngFor="let item of formData; let idx = index">
       <div class="input" *ngIf="item.type !== 'button' && item.type !== 'checkbox'" (click)="onFieldClick($event, idx)">

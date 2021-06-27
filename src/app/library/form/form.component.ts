@@ -1,4 +1,4 @@
-import {Component, HostListener, Input, OnInit } from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 import { FormOptionsModel } from '../../models/form-options.model';
 import { FormDataModel } from '../../models/form-data.model';
 import { ICONS } from '../../utils';
@@ -10,6 +10,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./form.component.scss']
 })
 export class FormComponent implements OnInit {
+  @Output() public onFormDataEmmit: EventEmitter<any> = new EventEmitter<any>();
   @Input() public options: FormOptionsModel = new FormOptionsModel();
   @Input() public formData: FormDataModel[] = [];
   @Input() public formStyles: any = {};
@@ -49,7 +50,7 @@ export class FormComponent implements OnInit {
   }
 
   submit(f: NgForm) {
-    if (!this.confirmed) {
+    if (!this.confirmed || f.invalid) {
       this.confirmedError = true;
       this.resetConfirmError();
       return;
@@ -58,30 +59,31 @@ export class FormComponent implements OnInit {
       name: f.controls.fullName.value,
       email: f.controls.email.value,
       phoneNumber: f.controls.phone.value,
-      password: f.controls.password.value
+      password: f.controls.password.value,
+      date: f.controls.date.value
     }
-    console.log('sendData', sendData)
+    this.onFormDataEmmit.emit(sendData);
   }
 
 
   onStrengthChanged(score: number) {
-    if (score <= 20) {
-      this.title = 'Weak password';
-      this.description = 'Come up with a more difficult password';
-    }
-    if (score > 20 && score <= 60) {
-      this.title = 'Average password';
-      this.description = 'Good password';
-    }
-    if (score > 60) {
-      this.title = 'Strong password';
-      this.description = 'Great! This will do. Just do not forgot him';
-    }
+    setTimeout(() => {
+      if (score <= 20) {
+        this.title = 'Weak password';
+        this.description = 'Come up with a more difficult password';
+      }
+      if (score > 20 && score <= 60) {
+        this.title = 'Average password';
+        this.description = 'Good password';
+      }
+      if (score > 60) {
+        this.title = 'Strong password';
+        this.description = 'Great! This will do. Just do not forgot him';
+      }
+    });
   }
 
   onDateSet(date: any) {
-    console.log('ageee', date)
-    console.log('123', this.formData.find(item => item.type === 'datepicker'))
     const datePickerValue = this.formData.find(item => item.type === 'datepicker');
     if (datePickerValue) {
       datePickerValue.value = date.stringFormat;

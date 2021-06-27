@@ -8,14 +8,14 @@ import {ListDataModel} from '../../models/list-data.model';
   styleUrls: ['./dropdown.component.scss']
 })
 export class DropdownComponent implements OnInit {
+  @Output() public onListItemEmmit: EventEmitter<ListDataModel> = new EventEmitter<ListDataModel>();
+  @Input() public listData: ListDataModel[] = [];
+  @Input() public selectedItem: string = '';
+
   public iconPath: string = ICONS;
 
-  @Input() public selectedItem: string = '';
-  @Input() public listData: ListDataModel[] = [];
-  @Output() public onListItemEmmit: EventEmitter<ListDataModel> = new EventEmitter<ListDataModel>();
 
-
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {}
 
@@ -23,5 +23,4 @@ export class DropdownComponent implements OnInit {
     this.selectedItem = item.name;
     this.onListItemEmmit.emit(item);
   }
-
 }
