@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ICONS } from '../../utils';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { ListDataModel } from '../../models/list-data.model';
 import { MONTHS} from '../../sahred/date';
 
@@ -9,15 +8,19 @@ import { MONTHS} from '../../sahred/date';
   styleUrls: ['./custom-datepicker.component.scss']
 })
 export class CustomDatepickerComponent implements OnInit {
+  @Output() public onSelectedDateEmmit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() public onCancel: EventEmitter<boolean> = new EventEmitter<boolean>();
   public selectedMonthValue: string = '';
+  public showPopup: boolean = false;
   public selectedYear: string = '';
   public selectedMonth: string = '';
   public selectedDay: string = '';
-  public daysInMonth: string = '';
+  public daysInCurrentMonth: string = '';
+  public daysInPrevMonth: string = '';
   public startDayIndex: number = 0;
   public date = new window.Date();
   public weekDays: string[] = ['Mo','Tu','We', 'Th', 'Fri', 'Sa', 'Su'];
-  public days: string[] = [];
+  public days: any = [];
   public months: ListDataModel[] = MONTHS;
   public years: ListDataModel[] = [];
 
@@ -25,8 +28,11 @@ export class CustomDatepickerComponent implements OnInit {
 
   ngOnInit(): void {
     this.getYears();
-    this.onMonthSelect({name: this.months[this.date.getMonth()].name, value: this.date.getMonth().toString()});
-    this.onDaySelect(this.date.getDate().toString())
+    this.onMonthSelect({name: this.months[this.date.getMonth()].name, value: (this.date.getMonth() + 1).toString()});
+    this.onDaySelect({value: this.date.getDate().toString(), active:true})
+    setTimeout(() =>{
+      this.showPopup = true;
+    });
   }
 
   getYears() {
@@ -38,59 +44,83 @@ export class CustomDatepickerComponent implements OnInit {
     }
   }
 
-  getDaysInMonth() {
-    let dt = new window.Date(`${this.selectedMonthValue}/1/${this.selectedYear}`);
-    let month = dt.getMonth() + 1;
-    let year = dt.getFullYear();
-    this.daysInMonth = new window.Date(year, month, 0).getDate().toString();
-    console.log(dt.getMonth());
-    const currentWeekDay = dt.getDay();
+  getPrevMonthDays() {
+    let prevMonthIndex: string;
 
+    if (this.selectedMonthValue !== '1') {
+      prevMonthIndex = (+this.selectedMonthValue - 1).toString();
+    } else {
+      prevMonthIndex = '12';
+    }
+
+    const prevMonth = new window.Date(`${prevMonthIndex}/1/${this.selectedYear}`);
+    const month = prevMonth.getMonth() + 1;
+    const year = prevMonth.getFullYear();
+    this.daysInPrevMonth = new window.Date(year, month, 0).getDate().toString();
+  }
+
+
+  getCurrentDaysInMonth() {
+    this.getPrevMonthDays();
+    const currentDate = new window.Date(`${this.selectedMonthValue}/1/${this.selectedYear}`);
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    const currentWeekDay = currentDate.getDay();
+    this.daysInCurrentMonth = new window.Date(year, month, 0).getDate().toString();
     this.days = [];
+
     if (currentWeekDay !== 0) {
       this.startDayIndex = currentWeekDay - 1;
     } else {
       this.startDayIndex = 6;
     }
-    for (let i = 0; i < this.startDayIndex; i++) {
-      this.days.push('');
-    }
-    console.log('start', this.startDayIndex)
 
-    for (let i = 1; i <= +this.daysInMonth; i++) {
-      this.days.push(i.toString());
+    for (let i = this.startDayIndex; i > 0; i--) {
+      this.days.push({value: (+this.daysInPrevMonth + 1 - i).toString(), active: false});
     }
+
+    for (let i = 1; i <= +this.daysInCurrentMonth; i++) {
+      this.days.push({value: i.toString(), active: true});
+    }
+
+    const daysLength: number = this.days.length;
+
+    if (daysLength < 42) {
+      for (let i = 1; i <= 42 - daysLength; i++) {
+        this.days.push({value: i.toString(), active: false})
+      }
+    }
+  }
+
+  onYearSelect(year: ListDataModel) {
+    this.selectedDay = ' ';
+    this.selectedYear = year.name;
+    this.getCurrentDaysInMonth();
   }
 
   onMonthSelect(month: ListDataModel) {
     this.selectedDay = ' ';
     this.selectedMonth = month.name;
     this.selectedMonthValue = month.value;
-    this.getDaysInMonth();
-    console.log('days in month',this.daysInMonth)
+    this.getCurrentDaysInMonth();
   }
 
-  onYearSelect(year: ListDataModel) {
-    this.selectedDay = ' ';
-    this.selectedYear = year.name;
-    this.getDaysInMonth();
-    console.log('days in month',this.daysInMonth)
-  }
-
-  onDaySelect(day: string) {
-    this.selectedDay = day || ' ';
+  onDaySelect(day: any) {
+    if (day.active) {
+      this.selectedDay = day.value || ' ';
+    }
   }
 
   onDateSet() {
     // Date format
     const date = new Date(`${this.selectedMonth}/${this.selectedDay}/${this.selectedYear}`);
-    console.log('Date', date);
+
     // String
     const stringDate = this.selectedDay + '/' + this.selectedMonthValue + '/' + this.selectedYear;
-    console.log('Date as string', stringDate);
-  }
 
-  onCancel() {
-
+    this.onSelectedDateEmmit.emit({
+      stringFormat: stringDate,
+      dateFormat: date
+    })
   }
 }

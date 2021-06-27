@@ -1,17 +1,18 @@
-<form class="form" (ngSubmit)="submit(f)" #f="ngForm" autocompleted>
-  <ul class="fields-list">
+<form class="form" (ngSubmit)="submit(f)" #f="ngForm">
+  <ul class="fields-list" [ngStyle]="formStyles || {}">
     <li class="field" *ngFor="let item of formData; let idx = index">
       <div class="input" *ngIf="item.type !== 'button' && item.type !== 'checkbox'" (click)="onFieldClick($event, idx)">
         <label [for]="item.id" [class.active]="selectedFieldIndex === idx">{{item.label}}</label>
         <input [type]="item.type !== 'password' ? item.type : showPassword ? 'text' : 'password'"
                [class.error]="f.submitted && input.invalid"
+               [(ngModel)]="item.value"
+               [name]="item.name || ''"
                #input="ngModel"
                [id]="item.id"
+               [readOnly]="item.readOnly"
                [autocomplete]="item.autocomplete || 'off'"
-               [name]="item.name || ''"
                [maxLength]="item.maxLength || 1000000"
                [minLength]="item.minLength || 0"
-               [(ngModel)]="item.value"
                [required]="item.required || true"
                [pattern]="item.pattern || '.*'"/>
         <div class="password-info" *ngIf="item.type === 'password'" [class.active]="selectedFieldIndex === idx">
@@ -28,8 +29,11 @@
         <svg class="show-pass" *ngIf="item.type === 'password'" (click)="showPass()">
           <use [attr.xlink:href]="iconPath + (!showPassword ? 'show_pass' : 'hide_pass')+ '.svg#Layer_1'"></use>
         </svg>
-        <svg class="done" *ngIf="input.valid && item.type !== 'password'">
+        <svg class="done" *ngIf="input.valid && item.type !== 'password' && item.type !== 'datepicker'">
           <use [attr.xlink:href]="iconPath + 'done.svg#Layer_1'"></use>
+        </svg>
+        <svg class="calendar" *ngIf="item.type === 'datepicker'" (click)="showDatepicker = !showDatepicker">
+          <use [attr.xlink:href]="iconPath + 'calendar.svg#Layer_1'"></use>
         </svg>
       </div>
       <button class="button" [type]="item.buttonType" *ngIf="item.type === 'button'">
@@ -48,3 +52,4 @@
     </li>
   </ul>
 </form>
+<app-custom-datepicker *ngIf="showDatepicker" (onCancel)="showDatepicker = $event" (onSelectedDateEmmit)="onDateSet($event)"></app-custom-datepicker>

@@ -7,11 +7,13 @@
   input {
     width: 100%;
     height: 100%;
-    padding: 10px;
+    padding: 10px 25px 10px 10px;
     border: none;
     cursor: pointer;
+    text-align: center;
     outline: none;
     border-radius: 8px;
+    font-weight: bold;
   }
 
   svg {
@@ -42,8 +44,12 @@
       cursor: pointer;
 
       &:hover {
-        background-color: #7048EA;
+        background-color: #6f4ad9;
         color: #fff;
+      }
+
+      &.active {
+        color: #6f4ad9;
       }
     }
 
@@ -57,10 +63,11 @@
   &.open {
     input {
       background-color: #F8F8FA;
-      color: #6D4CD2;
+      color: #6f4ad9;
     }
     svg {
       transform: scale(1) translateY(-50%);
+      fill: #6f4ad9;
     }
     ul {
       display: block;

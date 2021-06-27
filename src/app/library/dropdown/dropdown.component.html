@@ -4,7 +4,7 @@
     <use [attr.xlink:href]="iconPath + 'arrow.svg#Layer_1'"></use>
   </svg>
   <ul>
-    <li *ngFor="let item of listData" (click)="onListItemSelect(item)">
+    <li *ngFor="let item of listData" (click)="onListItemSelect(item)" [class.active]="selectedItem === item.name">
       {{item.name}}
     </li>
   </ul>

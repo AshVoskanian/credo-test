@@ -1,4 +1,4 @@
-<div class="datepicker-wrapper">
+<div class="datepicker-wrapper" [class.active]="showPopup">
   <div class="datepicker">
     <div class="header">
       <div class="dropdown">
@@ -14,13 +14,13 @@
       </div>
       <div class="days">
         <div class="day" *ngFor="let day of days" (click)="onDaySelect(day)"
-             [class.active]="day" [class.selected]="day === selectedDay">
-          {{day}}
+             [class.active]="day.active" [class.selected]="day.value === selectedDay && day.active">
+          {{day.value}}
         </div>
       </div>
     </div>
     <div class="buttons">
-      <div class="btn cancel" (click)="onCancel()">
+      <div class="btn cancel" (click)="onCancel.emit(false)">
         Cancel
       </div>
       <div class="btn set-date" (click)="onDateSet()">

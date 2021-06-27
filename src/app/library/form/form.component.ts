@@ -12,6 +12,7 @@ import { NgForm } from '@angular/forms';
 export class FormComponent implements OnInit {
   @Input() public options: FormOptionsModel = new FormOptionsModel();
   @Input() public formData: FormDataModel[] = [];
+  @Input() public formStyles: any = {};
   @HostListener('document:click', ['$event'])
   click() {
     this.selectedFieldIndex = null;
@@ -21,6 +22,7 @@ export class FormComponent implements OnInit {
   public showPassword: boolean = false;
   public confirmed: boolean = false;
   public confirmedError: boolean = false;
+  public showDatepicker: boolean = false;
   public description: string = '';
   public title: string = '';
 
@@ -75,5 +77,15 @@ export class FormComponent implements OnInit {
       this.title = 'Strong password';
       this.description = 'Great! This will do. Just do not forgot him';
     }
+  }
+
+  onDateSet(date: any) {
+    console.log('ageee', date)
+    console.log('123', this.formData.find(item => item.type === 'datepicker'))
+    const datePickerValue = this.formData.find(item => item.type === 'datepicker');
+    if (datePickerValue) {
+      datePickerValue.value = date.stringFormat;
+    }
+    this.showDatepicker = false
   }
 }

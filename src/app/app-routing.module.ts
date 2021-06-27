@@ -4,8 +4,7 @@ import {Routes, RouterModule, PreloadAllModules} from '@angular/router';
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home',loadChildren:  () => import('./partials/home/home.module').then(m => m.HomeModule)},
-  { path: 'form',loadChildren:  () => import('./partials/signup/signup.module').then(m => m.SignupModule)},
-  { path: 'datepicker',loadChildren:  () => import('./partials/datepicker/datepicker.module').then(m => m.DatepickerModule)}
+  { path: 'form',loadChildren:  () => import('./partials/signup/signup.module').then(m => m.SignupModule)}
 ];
 
 @NgModule({

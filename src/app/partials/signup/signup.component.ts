@@ -12,7 +12,7 @@ export class SignupComponent implements OnInit {
   public iconPath: string = ICONS;
   public offers: OffersModel[] = [
     {
-      icon: 'svg',
+      icon: 'security',
       text: 'Secure payments through reliable partners'
     },
     {
@@ -37,14 +37,16 @@ export class SignupComponent implements OnInit {
       label: 'Full Name',
       type: 'text',
       name: 'fullName',
-      id: 'fullName'
+      id: 'fullName',
+      value: ''
     },
     {
       label: 'Email',
       type: 'email',
       name: 'email',
       id: 'email',
-      pattern: '^(([^<>()[\\]\\\\.,;:\\s@"]+(\\.[^<>()[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$'
+      pattern: '^(([^<>()[\\]\\\\.,;:\\s@"]+(\\.[^<>()[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$',
+      value: ''
     },
     {
       label: 'Phone Number',
@@ -52,6 +54,7 @@ export class SignupComponent implements OnInit {
       name: 'phone',
       id: 'phoneNumber',
       pattern: '^5[0-9]{8}$',
+      value: ''
     },
     {
       label: 'Password',
@@ -61,13 +64,22 @@ export class SignupComponent implements OnInit {
       id: 'password'
     },
     {
+      type: 'datepicker',
+      name: 'datepicker',
+      value: '',
+      readOnly: true
+    },
+    {
       type: 'button',
+      name: 'btn',
       buttonText: 'Sign Up',
-      buttonType: 'submit'
+      buttonType: 'submit',
+      value: ''
     },
     {
       type: 'checkbox',
-      label: 'racxa'
+      name: 'checkbox',
+      value: ''
     }
   ]
 
